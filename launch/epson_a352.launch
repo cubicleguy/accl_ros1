@@ -1,0 +1,86 @@
+<launch>
+
+  <node pkg="epson_accl_ros_driver" type="epson_accl_ros_node" name="epson_accl_ros_node"
+    output="screen">
+
+    <!-- The name of the serial port to read IMU data from. 
+	NOTE: This is only used for UART interface. When SPI interface is used
+	      this port setting is ignored -->
+    <param name="port" type="string" value="/dev/ttyUSB0" />
+	
+    <!-- mesmod_sel: Selects noise floor mode
+     0: standard noise floor
+     1: reduced noise floor -->
+    <param name="mesmod_sel" type="int" value="0" />
+	
+    <!-- temp_stabil: Selects to enable temperature stabilization against thermal shock
+     0: disabled
+     1: enabled -->
+    <param name="temp_stabil" type="int" value="0" />
+	
+    <!-- ext_sel: Selects to enable external trigger function on EXT pin
+     0: disabled (use internal timing)
+     1: enabled (use EXT Trigger Input) -->
+    <param name="ext_sel" type="int" value="0" />
+	
+    <!-- ext_pol: Selects the polarity of the EXT trigger function.
+     0: Positive Logic (Rising Edge)
+     1: Negative Logic (Falling Edge) -->
+    <param name="ext_pol" type="int" value="0" />
+	
+    <!-- drdy_on: Selects to enable data ready function on DRDY pin.
+     0: disabled
+     1: enabled 
+	 NOTE: For SPI interface drdy_on must be set to 1=enabled -->
+    <param name="drdy_on" type="int" value="1" />
+
+    <!-- drdy_pol: Selects the polarity of the Data Ready signal when enabled in DRDY_ON above.
+     0: Active Low
+     1: Active High 
+	 NOTE: For SPI interface drdy_pol must be set to 1=Active HIGH -->
+    <param name="drdy_pol" type="int" value="1" />
+
+    <!-- dout_rate: Specifies the data output rate.
+     The following lists the data output rate option with the recommended number of filter taps.
+     Samples per sec.    Recommended Filter
+     0x02 :1000Sps       TAP>=1
+     0x03 :500Sps        TAP>=2
+     0x04 :200Sps        TAP>=4
+     0x05 :100Sps        TAP>=8
+     0x06 :50Sps         TAP>=16 -->
+    <param name="dout_rate" type="int" value="4" />
+
+    <!-- Specifies the filter and TAP setting
+     which defines the cutoff frequency fc in Hz.
+     When using user-defined filter, user must ensure filter
+	 meets nyquist criterion for cutoff fequency 
+
+     1: FIR Kaiser filter TAP=64 and fc=83
+     2: FIR Kaiser filter TAP=64 and fc=220
+     3: FIR Kaiser filter TAP=128 and fc=36
+     4: FIR Kaiser filter TAP=128 and fc=110
+     5: FIR Kaiser filter TAP=128 and fc=350
+     6: FIR Kaiser filter TAP=512 and fc=9
+     7: FIR Kaiser filter TAP=512 and fc=16
+     8: FIR Kaiser filter TAP=512 and fc=60
+     9: FIR Kaiser filter TAP=512 and fc=210
+     10: FIR Kaiser filter TAP=512 and fc=460
+     12: User-Defined FIR filter TAP=4
+     13: User-Defined FIR filter TAP=64
+     14: User-Defined FIR filter TAP=128
+     15: User-Defined FIR filter TAP=512 -->
+    <param name="filter_sel" type="int" value="8" />
+
+    <!-- Enables or disables the following sensor outputs -->
+    <param name="flag_out" type="int" value="1" />
+    <param name="temp_out" type="int" value="1" />
+    <param name="accel_out" type="int" value="1" />
+    <param name="count_out" type="int" value="1" />
+    <param name="checksum_out" type="int" value="1" />
+
+    <!-- Remap topic to /imu/data_raw. 
+	  Change to other topic to avoid namespace collision -->
+    <remap from="epson_accl" to="imu/data_raw"/>
+  </node>
+
+</launch>

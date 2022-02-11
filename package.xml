@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>epson_accl_ros_driver</name>
+  <version>1.0.0</version>
+  <description>C++ Wrapper for ROS1 node of Accelerometer package</description>
+
+  <maintainer email="raymond.chow@ea.epson.com">Raymond Chow</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+</package>
